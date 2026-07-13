@@ -1,0 +1,297 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+  password      String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  accounts      Account[]
+  sessions      Session[]
+  jobs          Job[]
+  resumes       Resume[]
+  coverLetters  CoverLetter[]
+  interviews    Interview[]
+  contacts      Contact[]
+  subscription  Subscription?
+  aiUsage       AiUsage[]
+
+  @@map("users")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verification_tokens")
+}
+
+model Job {
+  id         String    @id @default(cuid())
+  userId     String
+  company    String
+  role       String
+  location   String?
+  salary     String?
+  jobUrl     String?
+  status     JobStatus @default(SAVED)
+  notes      String?   @db.Text
+  appliedAt  DateTime?
+  deadlineAt DateTime?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  user       User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  interviews Interview[]
+  resumeUsed Resume?       @relation(fields: [resumeId], references: [id])
+  resumeId   String?
+  aiAnalyses AiAnalysis[]
+  timeline   JobTimeline[]
+
+  @@index([userId])
+  @@index([status])
+  @@map("jobs")
+}
+
+enum JobStatus {
+  SAVED
+  APPLIED
+  ASSESSMENT
+  INTERVIEW
+  OFFER
+  REJECTED
+  WITHDRAWN
+}
+
+model JobTimeline {
+  id        String    @id @default(cuid())
+  jobId     String
+  status    JobStatus
+  note      String?
+  createdAt DateTime  @default(now())
+
+  job Job @relation(fields: [jobId], references: [id], onDelete: Cascade)
+
+  @@index([jobId])
+  @@map("job_timelines")
+}
+
+model Resume {
+  id        String   @id @default(cuid())
+  userId    String
+  name      String
+  fileUrl   String
+  fileKey   String
+  isDefault Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user       User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  jobs       Job[]
+  aiAnalyses AiAnalysis[]
+
+  @@index([userId])
+  @@map("resumes")
+}
+
+model CoverLetter {
+  id        String   @id @default(cuid())
+  userId    String
+  title     String
+  content   String   @db.Text
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("cover_letters")
+}
+
+model Interview {
+  id          String        @id @default(cuid())
+  userId      String
+  jobId       String
+  type        InterviewType
+  scheduledAt DateTime
+  meetingLink String?
+  notes       String?       @db.Text
+  feedback    String?       @db.Text
+  result      String?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  job  Job  @relation(fields: [jobId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([jobId])
+  @@map("interviews")
+}
+
+enum InterviewType {
+  PHONE_SCREEN
+  TECHNICAL
+  BEHAVIORAL
+  SYSTEM_DESIGN
+  HR
+  FINAL
+  OTHER
+}
+
+model AiAnalysis {
+  id            String   @id @default(cuid())
+  jobId         String
+  resumeId      String
+  matchScore    Int
+  missingSkills String[]
+  strengths     String[]
+  suggestions   String[]
+  rawResponse   String   @db.Text
+  createdAt     DateTime @default(now())
+
+  job    Job    @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  resume Resume @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+
+  @@index([jobId])
+  @@map("ai_analyses")
+}
+
+model AiUsage {
+  id        String   @id @default(cuid())
+  userId    String
+  type      String
+  month     String
+  count     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, type, month])
+  @@index([userId])
+  @@map("ai_usage")
+}
+
+model Contact {
+  id          String    @id @default(cuid())
+  userId      String
+  name        String
+  company     String?
+  position    String?
+  email       String?
+  linkedin    String?
+  notes       String?   @db.Text
+  lastContact DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("contacts")
+}
+
+model Subscription {
+  id                 String             @id @default(cuid())
+  userId             String             @unique
+  plan               Plan               @default(FREE)
+  status             SubscriptionStatus @default(ACTIVE)
+  provider           PaymentProvider?
+  providerSubId      String?
+  currentPeriodStart DateTime?
+  currentPeriodEnd   DateTime?
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  payments Payment[]
+
+  @@map("subscriptions")
+}
+
+model Payment {
+  id             String          @id @default(cuid())
+  subscriptionId String
+  amount         Float
+  currency       String
+  provider       PaymentProvider
+  providerTxnId  String?
+  status         PaymentStatus
+  createdAt      DateTime        @default(now())
+
+  subscription Subscription @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+
+  @@index([subscriptionId])
+  @@map("payments")
+}
+
+enum Plan {
+  FREE
+  PRO
+  PREMIUM
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  CANCELLED
+  PAST_DUE
+  TRIALING
+}
+
+enum PaymentProvider {
+  SSLCOMMERZ
+  STRIPE
+}
+
+enum PaymentStatus {
+  PENDING
+  SUCCESS
+  FAILED
+  REFUNDED
+}
