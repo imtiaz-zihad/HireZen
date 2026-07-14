@@ -4,13 +4,13 @@ import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 
 const statusColors: Record<string, string> = {
-  SAVED: "#4b5563",
-  APPLIED: "#6366f1",
-  ASSESSMENT: "#7c6df2",
-  INTERVIEW: "#8b5cf6",
-  OFFER: "#f5a623",
-  REJECTED: "#ef4444",
-  WITHDRAWN: "#6b7280",
+  SAVED: "var(--color-stamp-graphite)",
+  APPLIED: "var(--color-stamp-ledger)",
+  ASSESSMENT: "var(--color-stamp-olive)",
+  INTERVIEW: "var(--color-stamp-violet)",
+  OFFER: "var(--color-stamp-red)",
+  REJECTED: "var(--color-stamp-void)",
+  WITHDRAWN: "var(--color-stamp-slate)",
 };
 
 export default async function DashboardPage() {
@@ -62,7 +62,7 @@ export default async function DashboardPage() {
                   className="h-2 w-2 rounded-full"
                   style={{ backgroundColor: color }}
                 />
-                <p className="text-xs text-foreground/50">{status}</p>
+                <p className="text-xs text-card-foreground/60">{status}</p>
               </div>
               <p className="mt-2 font-heading text-2xl font-bold">{count}</p>
             </div>
@@ -73,7 +73,7 @@ export default async function DashboardPage() {
       <div className="card-base">
         <h2 className="mb-4 font-heading text-lg font-bold">Recently updated</h2>
         {jobs.length === 0 ? (
-          <p className="py-8 text-center text-sm text-foreground/50">
+          <p className="py-8 text-center text-sm text-card-foreground/50">
             No jobs yet. Add your first application to get started.
           </p>
         ) : (
@@ -82,11 +82,11 @@ export default async function DashboardPage() {
               <Link
                 key={job.id}
                 href={`/jobs/${job.id}`}
-                className="flex items-center justify-between rounded-xl border border-border bg-muted/60 px-4 py-3 hover:border-brand-indigo/40"
+                className="flex items-center justify-between rounded-xl border border-border/30 bg-black/[0.04] px-4 py-3 hover:border-stamp-red/40"
               >
                 <div>
-                  <p className="text-sm font-medium">{job.company}</p>
-                  <p className="text-xs text-foreground/50">{job.role}</p>
+                  <p className="text-sm font-medium text-card-foreground">{job.company}</p>
+                  <p className="text-xs text-card-foreground/60">{job.role}</p>
                 </div>
                 <Badge
                   style={{ backgroundColor: statusColors[job.status] }}
