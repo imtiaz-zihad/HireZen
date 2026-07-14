@@ -82,7 +82,7 @@ export default function LandingPage() {
               You didn&apos;t get ghosted.
               <br />
               You just{" "}
-              <span className="relative inline-block">
+              <span className="relative inline-block text-primary">
                 lost track.
                 <span className="absolute inset-x-0 bottom-1 -z-10 h-3 bg-brand-indigo/30" />
               </span>

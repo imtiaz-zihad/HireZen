@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Syne, DM_Sans, Fraunces, Space_Mono } from "next/font/google";
+import {  Fraunces, Space_Mono } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 
