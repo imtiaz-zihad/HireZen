@@ -1,8 +1,10 @@
 import { notFound } from "next/navigation";
 import { auth } from "@/lib/auth";
+import { prisma } from "@/lib/prisma";
 import { jobRepository } from "@/lib/repositories/job.repository";
 import { JobForm } from "@/components/dashboard/job-form";
 import { DeleteJobButton } from "@/components/dashboard/delete-job-button";
+import { AnalysisPanel } from "@/components/dashboard/analysis-panel";
 
 export default async function JobDetailPage({
   params,
@@ -14,6 +16,16 @@ export default async function JobDetailPage({
 
   const job = await jobRepository.findById(id, session!.user.id);
   if (!job) notFound();
+
+  const [latestAnalysis, defaultResume] = await Promise.all([
+    prisma.aiAnalysis.findFirst({
+      where: { jobId: job.id },
+      orderBy: { createdAt: "desc" },
+    }),
+    prisma.resume.findFirst({
+      where: { userId: session!.user.id, isDefault: true },
+    }),
+  ]);
 
   return (
     <div className="mx-auto max-w-2xl">
@@ -27,6 +39,14 @@ export default async function JobDetailPage({
           </p>
         </div>
         <DeleteJobButton jobId={job.id} />
+      </div>
+
+      <div className="mb-6">
+        <AnalysisPanel
+          jobId={job.id}
+          initialAnalysis={latestAnalysis}
+          hasResume={Boolean(defaultResume)}
+        />
       </div>
 
       <div className="card-base">
