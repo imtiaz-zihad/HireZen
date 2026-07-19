@@ -30,8 +30,8 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-brand-indigo: #6366f1;
-  --color-brand-purple: #8b5cf6;
+  --color-brand-indigo: #e8752b;
+  --color-brand-purple: #c65a1e;
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -39,46 +39,46 @@
 }
 
 :root {
-  --background: #080b10;
-  --foreground: #e4e7ec;
-  --card: #0d1117;
-  --card-foreground: #e4e7ec;
-  --popover: #0d1117;
-  --popover-foreground: #e4e7ec;
-  --primary: #f2b544;
+  --background: #0d0b09;
+  --foreground: #ece6e0;
+  --card: #171310;
+  --card-foreground: #ece6e0;
+  --popover: #171310;
+  --popover-foreground: #ece6e0;
+  --primary: #e8752b;
   --primary-foreground: #ffffff;
-  --secondary: #1c2129;
-  --secondary-foreground: #e4e7ec;
-  --muted: #0f1319;
-  --muted-foreground: #9199a8;
-  --accent: #8b5cf6;
-  --accent-foreground: #ffffff;
+  --secondary: #2a221c;
+  --secondary-foreground: #ece6e0;
+  --muted: #1c1712;
+  --muted-foreground: #a89a8c;
+  --accent: #f5b841;
+  --accent-foreground: #171310;
   --destructive: #ef4444;
-  --border: #1c2129;
-  --input: #1c2129;
-  --ring: #6366f1;
+  --border: #2a221c;
+  --input: #2a221c;
+  --ring: #e8752b;
   --radius: 0.875rem;
 }
 
 .dark {
-  --background: #080b10;
-  --foreground: #e4e7ec;
-  --card: #0d1117;
-  --card-foreground: #e4e7ec;
-  --popover: #0d1117;
-  --popover-foreground: #e4e7ec;
-  --primary: #6366f1;
+  --background: #0d0b09;
+  --foreground: #ece6e0;
+  --card: #171310;
+  --card-foreground: #ece6e0;
+  --popover: #171310;
+  --popover-foreground: #ece6e0;
+  --primary: #e8752b;
   --primary-foreground: #ffffff;
-  --secondary: #1c2129;
-  --secondary-foreground: #e4e7ec;
-  --muted: #0f1319;
-  --muted-foreground: #9199a8;
-  --accent: #8b5cf6;
-  --accent-foreground: #ffffff;
+  --secondary: #2a221c;
+  --secondary-foreground: #ece6e0;
+  --muted: #1c1712;
+  --muted-foreground: #a89a8c;
+  --accent: #f5b841;
+  --accent-foreground: #171310;
   --destructive: #ef4444;
-  --border: #1c2129;
-  --input: #1c2129;
-  --ring: #6366f1;
+  --border: #2a221c;
+  --input: #2a221c;
+  --ring: #e8752b;
 }
 
 @layer base {

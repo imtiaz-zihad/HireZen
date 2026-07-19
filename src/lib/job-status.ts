@@ -11,13 +11,13 @@ export const JOB_STATUSES: JobStatus[] = [
 ];
 
 export const STATUS_COLORS: Record<JobStatus, string> = {
-  SAVED: "#4b5563",
-  APPLIED: "#6366f1",
-  ASSESSMENT: "#7c6df2",
-  INTERVIEW: "#8b5cf6",
-  OFFER: "#f5a623",
+  SAVED: "#6b7280",
+  APPLIED: "#e8752b",
+  ASSESSMENT: "#d9832f",
+  INTERVIEW: "#c65a1e",
+  OFFER: "#f5b841",
   REJECTED: "#ef4444",
-  WITHDRAWN: "#6b7280",
+  WITHDRAWN: "#78716c",
 };
 
 export const STATUS_LABELS: Record<JobStatus, string> = {

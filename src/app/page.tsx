@@ -5,11 +5,11 @@ import { Footer } from "@/components/footer";
 import { Button } from "@/components/ui/button";
 
 const pipeline = [
-  { label: "Saved", color: "#4b5563", width: "16%" },
-  { label: "Applied", color: "#6366f1", width: "24%" },
-  { label: "Assessment", color: "#7c6df2", width: "20%" },
-  { label: "Interview", color: "#8b5cf6", width: "24%" },
-  { label: "Offer", color: "#f5a623", width: "16%" },
+  { label: "Saved", color: "#6b7280", width: "16%" },
+  { label: "Applied", color: "#e8752b", width: "24%" },
+  { label: "Assessment", color: "#d9832f", width: "20%" },
+  { label: "Interview", color: "#c65a1e", width: "24%" },
+  { label: "Offer", color: "#f5b841", width: "16%" },
 ];
 
 const stack = [
@@ -17,7 +17,7 @@ const stack = [
     company: "Fintra",
     role: "Backend Engineer",
     status: "Offer",
-    color: "#f5a623",
+    color: "#f5b841",
     rotate: "rotate-[6deg]",
     translate: "translate-x-8 translate-y-6",
   },
@@ -25,7 +25,7 @@ const stack = [
     company: "Northwind Labs",
     role: "Frontend Developer",
     status: "Applied",
-    color: "#6366f1",
+    color: "#e8752b",
     rotate: "rotate-[-4deg]",
     translate: "-translate-x-6 translate-y-2",
   },
@@ -33,7 +33,7 @@ const stack = [
     company: "Nimbus Tech",
     role: "SWE Intern",
     status: "Interview",
-    color: "#8b5cf6",
+    color: "#c65a1e",
     rotate: "rotate-[1deg]",
     translate: "translate-y-0",
   },

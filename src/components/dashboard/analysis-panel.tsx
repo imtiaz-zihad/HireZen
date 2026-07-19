@@ -15,8 +15,8 @@ type Analysis = {
 };
 
 function scoreColor(score: number) {
-  if (score >= 75) return "#f5a623";
-  if (score >= 50) return "#8b5cf6";
+  if (score >= 75) return "#f5b841";
+  if (score >= 50) return "#e8752b";
   return "#ef4444";
 }
 
