@@ -8,6 +8,7 @@ import {
   FileText,
   CalendarCheck,
   Users,
+  BarChart3,
   Settings,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -18,6 +19,7 @@ const links = [
   { href: "/resumes", label: "Resumes", icon: FileText },
   { href: "/interviews", label: "Interviews", icon: CalendarCheck },
   { href: "/contacts", label: "Contacts", icon: Users },
+  { href: "/analytics", label: "Analytics", icon: BarChart3 },
   { href: "/settings", label: "Settings", icon: Settings },
 ];
 
